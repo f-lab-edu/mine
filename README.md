@@ -1,2 +1,1 @@
-# mine
-eBay를 모티브로 한 경매 e-commerce 서버
+![header](https://capsule-render.vercel.app/api?type=cylinder&color=auto&customColorList=16,19&text=MINE&fontAlignY=45&fontSize=40&height=150&animation=twinkling&desc=Discover👀%20|%20Bid💸%20|%20Mine🎁&descAlignY=70)
