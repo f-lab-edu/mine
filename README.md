@@ -7,4 +7,4 @@
 * 자동 입찰을 설정할 수 있습니다. 지불할 의사가 있는 최대 금액을 입력하면 사용자를 대신하여 증분 입찰가로 응찰합니다.
 
 ## System Design
-![Mine System Design](https://user-images.githubusercontent.com/76784643/158666391-0b21694d-df78-40f7-ae97-4820fcc2df15.png)
+![Mine System Design](https://user-images.githubusercontent.com/76784643/159048459-6fd81265-f076-41d4-9aab-77a9a991e6f1.png)
