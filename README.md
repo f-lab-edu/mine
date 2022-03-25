@@ -1,4 +1,4 @@
-![header](https://capsule-render.vercel.app/api?type=cylinder&color=auto&customColorList=16,19&text=MINE&fontAlignY=45&fontSize=40&height=150&animation=twinkling&desc=Discover👀%20|%20Bid💸%20|%20Mine🎁&descAlignY=70)
+![header](https://capsule-render.vercel.app/api?type=cylinder&color=auto&customColorList=19&text=MINE&fontAlignY=45&fontSize=40&height=150&animation=twinkling&desc=Discover👀%20|%20Bid💸%20|%20Mine🎁&descAlignY=70)
 
 ## About
 * Mine은 경매 서비스를 제공하기 위한 프로젝트입니다.
@@ -7,7 +7,7 @@
 * 자동 입찰을 설정할 수 있습니다. 지불할 의사가 있는 최대 금액을 입력하면 사용자를 대신하여 증분 입찰가로 응찰합니다.
 
 ## System Design
-![Mine System Design](https://user-images.githubusercontent.com/76784643/159048459-6fd81265-f076-41d4-9aab-77a9a991e6f1.png)
+![Mine System Design](https://user-images.githubusercontent.com/76784643/160184529-86aa0974-fff9-4e27-a27d-48c3055e6995.png)
 
 ## Issues
 * 경매 특성상 희소성 있는 상품일수록 수많은 사용자들이 경매에 참여하게 됩니다. 이러한 상황에서 발생하는 대규모 트래픽에 대응하기 위해서 Scale Out이 필요합니다.  
