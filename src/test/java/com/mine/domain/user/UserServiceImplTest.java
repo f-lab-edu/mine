@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.persistence.EntityNotFoundException;
+import javax.persistence.EntityExistsException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -30,20 +30,20 @@ class UserServiceImplTest {
     @DisplayName("회원가입 성공")
     void signUpUser() {
         UserCommand command = UserCommand.builder()
-                .userId("TEST_USER")
-                .password("test0000password")
-                .email("test@mine.com")
+                .userId("tester")
+                .password("password")
+                .email("tester@mine.com")
                 .build();
 
-        when(passwordEncoder.encode(any())).thenReturn("encoded0000password");
+        when(passwordEncoder.encode(any())).thenReturn("encodedPassword");
 
         User savedUser = User.builder()
-                .userId("TEST_USER")
-                .password(passwordEncoder.encode("test0000password"))
-                .email("test@mine.com")
+                .userId("tester")
+                .password(passwordEncoder.encode("password"))
+                .email("tester@mine.com")
                 .build();
 
-        doNothing().when(userReader).checkUserExists(command.getUserId());
+        when(userReader.exists(command.getUserId())).thenReturn(false);
         when(userStore.store(any())).thenReturn(savedUser);
 
         UserInfo userInfo = userService.signUpUser(command);
@@ -55,24 +55,15 @@ class UserServiceImplTest {
     @DisplayName("회원가입 실패_중복 아이디 예외 발생")
     void throwWhenDuplicateUserId() {
         UserCommand command = UserCommand.builder()
-                .userId("TEST_USER")
-                .password("test0000password")
-                .email("test0@mine.com")
+                .userId("tester")
+                .password("password")
+                .email("tester@mine.com")
                 .build();
 
-        doNothing().when(userReader).checkUserExists(command.getUserId());
 
-        userReader.checkUserExists(command.getUserId());
+        when(userReader.exists(command.getUserId())).thenReturn(true);
 
-        UserCommand command2 = UserCommand.builder()
-                .userId("TEST_USER")
-                .password("test1111password")
-                .email("test1@mine.com")
-                .build();
-
-        doThrow(new EntityNotFoundException("ID already exists")).when(userReader).checkUserExists(command2.getUserId());
-
-        EntityNotFoundException e = assertThrows(EntityNotFoundException.class, () -> userReader.checkUserExists(command2.getUserId()));
-        assertEquals("ID already exists", e.getMessage());
+        EntityExistsException e = assertThrows(EntityExistsException.class, () -> userService.signUpUser(command));
+        assertEquals("이미 사용 중인 아이디입니다.", e.getMessage());
     }
 }
