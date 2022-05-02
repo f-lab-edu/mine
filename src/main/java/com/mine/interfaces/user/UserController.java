@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
@@ -18,7 +20,7 @@ public class UserController {
     private final UserFacade userFacade;
 
     @PostMapping
-    public ResponseEntity<UserDto.SignupResponse> signUpUser(@RequestBody UserDto.SignupRequest request) {
+    public ResponseEntity<UserDto.SignupResponse> signUpUser(@Valid @RequestBody UserDto.SignupRequest request) {
         UserCommand command = request.toCommand();
         UserInfo userInfo = userFacade.signUpUser(command);
         UserDto.SignupResponse response = new UserDto.SignupResponse(userInfo);

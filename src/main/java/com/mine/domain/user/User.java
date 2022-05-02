@@ -21,16 +21,6 @@ public class User {
 
     @Builder
     public User(String userId, String password, String email) {
-        if (userId == null) {
-            throw new RuntimeException("empty userId");
-        }
-        if (password == null) {
-            throw new RuntimeException("empty password");
-        }
-        if (email == null) {
-            throw new RuntimeException("empty email");
-        }
-
         this.userId = userId;
         this.password = password;
         this.email = email;
