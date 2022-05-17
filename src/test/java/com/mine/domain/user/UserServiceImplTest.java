@@ -1,5 +1,6 @@
 package com.mine.domain.user;
 
+import com.mine.common.exception.EntityExistsException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -7,8 +8,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import javax.persistence.EntityExistsException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -60,10 +59,9 @@ class UserServiceImplTest {
                 .email("tester@mine.com")
                 .build();
 
-
         when(userReader.exists(command.getUserId())).thenReturn(true);
 
         EntityExistsException e = assertThrows(EntityExistsException.class, () -> userService.signUpUser(command));
-        assertEquals("이미 사용 중인 아이디입니다.", e.getMessage());
+        assertEquals("이미 존재하는 엔티티입니다.", e.getMessage());
     }
 }
