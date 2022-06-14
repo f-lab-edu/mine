@@ -15,15 +15,21 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String userId;
+
     private String password;
+
     private String email;
 
+    @Enumerated(EnumType.STRING)
+    private Authority authority;
+
     @Builder
-    public User(String userId, String password, String email) {
+    public User(String userId, String password, String email, Authority authority) {
         this.userId = userId;
         this.password = password;
         this.email = email;
+        this.authority = authority;
     }
 }
-

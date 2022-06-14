@@ -50,4 +50,18 @@ public class UserDto {
             this.email = userInfo.getEmail();
         }
     }
+
+    @Setter
+    public static class SigninRequest {
+
+        private String userId;
+        private String password;
+
+        public UserCommand toCommand() {
+            return UserCommand.builder()
+                    .userId(this.userId)
+                    .password(this.password)
+                    .build();
+        }
+    }
 }
