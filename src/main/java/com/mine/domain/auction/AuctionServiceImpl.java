@@ -21,9 +21,7 @@ public class AuctionServiceImpl implements AuctionService {
         ZonedDateTime closingTime = ZonedDateTime.now(ZoneId.of("UTC")).plusDays(command.getDuration());    // 경매 지속일을 더한 날짜/시간
         Auction initAuction = command.toEntity(closingTime);
         Auction auction = auctionStore.store(initAuction);
-        System.out.println("11");
         uploadImages(auction.getId(), command.getImages());
-        System.out.println("22");
         return new AuctionInfo(auction);
     }
 
