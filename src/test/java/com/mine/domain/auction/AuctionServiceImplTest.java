@@ -22,7 +22,6 @@ public class AuctionServiceImplTest {
     AuctionStore auctionStore;
 
     @InjectMocks
-//    @Mock
     AuctionServiceImpl auctionService;
 
     @Test
@@ -42,12 +41,10 @@ public class AuctionServiceImplTest {
                 .closingTime(ZonedDateTime.now(ZoneId.of("UTC")).plusDays(command.getDuration()))
                 .build();
 
-//        when(auctionStore.store(any())).thenReturn(savedAuction);
-//
-//        doNothing().when(auctionService).uploadImages(any(), any());
-//
-//        AuctionInfo auctionInfo = auctionService.createAuction(command);
+        when(auctionStore.store(any())).thenReturn(savedAuction);
 
-        assertEquals(command.getUserId(), savedAuction.getUser().getId());
+        AuctionInfo auctionInfo = auctionService.createAuction(command);
+
+        assertEquals(command.getUserId(), auctionInfo.getUserId());
     }
 }

@@ -35,4 +35,8 @@ public class Auction {
         this.startingPrice = startingPrice;
         this.closingTime = closingTime;
     }
+
+    public Auction(Long id) {
+        this.id = id;
+    }
 }
