@@ -12,3 +12,15 @@ spring:
     multipart:
       max-file-size: 20MB
       max-request-size: 20MB
+
+cloud:
+  aws:
+    credentials:
+      access-key: ${AWS_ACCESSKEY}
+      secret-key: ${AWS_SECRETKEY}
+    s3:
+      bucket: ${AWS_S3_BUCKET}
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
