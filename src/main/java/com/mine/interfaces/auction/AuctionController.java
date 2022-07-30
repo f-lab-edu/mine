@@ -24,4 +24,11 @@ public class AuctionController {
         AuctionDto.CreateAuctionResponse response = new AuctionDto.CreateAuctionResponse(auctionInfo);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/{auctionId}")
+    public ResponseEntity<AuctionDto.CatalogResponse> showCatalog(@PathVariable Long auctionId) {
+        AuctionInfo auctionInfo = auctionFacade.showCatalog(auctionId);
+        AuctionDto.CatalogResponse response = new AuctionDto.CatalogResponse(auctionInfo);
+        return ResponseEntity.ok(response);
+    }
 }

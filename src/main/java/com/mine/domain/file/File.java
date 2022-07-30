@@ -2,6 +2,7 @@ package com.mine.domain.file;
 
 import com.mine.domain.auction.Auction;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -15,12 +16,13 @@ public class File {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "auction_id")
     private Auction auction;
 
     private String bucket;
 
+    @Getter
     @Column(name = "s3_key")
     private String s3Key;
 
