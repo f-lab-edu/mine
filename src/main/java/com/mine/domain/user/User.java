@@ -16,7 +16,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String userId;
+    private String signinUserId;
 
     private String password;
 
@@ -26,8 +26,8 @@ public class User {
     private Authority authority;
 
     @Builder
-    public User(String userId, String password, String email, Authority authority) {
-        this.userId = userId;
+    public User(String signinUserId, String password, String email, Authority authority) {
+        this.signinUserId = signinUserId;
         this.password = password;
         this.email = email;
         this.authority = authority;

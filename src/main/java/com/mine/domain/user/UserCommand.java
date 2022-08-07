@@ -9,13 +9,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class UserCommand {
 
     @Getter
-    private final String userId;
+    private final String signinUserId;
     private final String password;
     private final String email;
 
     public User toEntity(PasswordEncoder passwordEncoder) {
         return User.builder()
-                .userId(this.userId)
+                .signinUserId(this.signinUserId)
                 .password(passwordEncoder.encode(this.password))
                 .email(this.email)
                 .authority(Authority.ROLE_USER)
@@ -23,6 +23,6 @@ public class UserCommand {
     }
 
     public UsernamePasswordAuthenticationToken toAuthentication() {
-        return new UsernamePasswordAuthenticationToken(this.userId, this.password);
+        return new UsernamePasswordAuthenticationToken(this.signinUserId, this.password);
     }
 }

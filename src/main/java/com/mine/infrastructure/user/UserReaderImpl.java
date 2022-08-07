@@ -15,11 +15,11 @@ public class UserReaderImpl implements UserReader {
 
     @Override
     public boolean exists(String userId) {
-        return userRepository.existsByUserId(userId);
+        return userRepository.existsBySigninUserId(userId);
     }
 
     @Override
-    public Optional<User> findByUserId(String userId) {
-        return userRepository.findByUserId(userId);
+    public Optional<User> findBySigninUserId(String signinUserId) {
+        return userRepository.findBySigninUserId(signinUserId);
     }
 }

@@ -6,5 +6,5 @@ public interface UserReader {
 
     boolean exists(String userId);
 
-    Optional<User> findByUserId(String userId);
+    Optional<User> findBySigninUserId(String signinUserId);
 }
