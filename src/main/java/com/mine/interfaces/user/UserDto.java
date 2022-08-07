@@ -9,9 +9,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-/**
- * static inner class를 사용하여 DTO class 내부에 request 및 response class를 그룹화한다.
- */
 public class UserDto {
 
     @Setter
