@@ -37,11 +37,13 @@ public class UserDto {
     @Getter
     public static class SignupResponse {
 
+        private final Long id;
         private final String signinUserId;
         private final String password;
         private final String email;
 
         public SignupResponse(UserInfo userInfo) {
+            this.id = userInfo.getId();
             this.signinUserId = userInfo.getSigninUserId();
             this.password = userInfo.getPassword();
             this.email = userInfo.getEmail();
