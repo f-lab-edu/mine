@@ -33,17 +33,17 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public TokenInfo signIn(UserCommand command) {
-        // 1. Login ID/PW를 기반으로 AuthenticationToken 생성
+        // Signin ID/PW를 기반으로 AuthenticationToken 생성
         UsernamePasswordAuthenticationToken authenticationToken = command.toAuthentication();
 
-        // 2. 실제 검증(비밀번호 체크)이 이루어지는 부분
+        // 실제 검증(비밀번호 체크)이 이루어지는 부분
         // authenticate 메서드가 실행될 때 CustomUserDetailsService에 만든 loadUserByUsername 메서드 실행
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
-        // 3. 인증 정보를 기반으로 JWT 토큰 생성
+        // 인증 정보를 기반으로 JWT 토큰 생성
         TokenInfo tokenInfo = tokenProvider.generateTokenInfo(authentication);
 
-        // 4. 토큰 발급
+        // 토큰 반환
         return tokenInfo;
     }
 }
