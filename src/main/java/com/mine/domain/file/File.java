@@ -19,12 +19,15 @@ public class File {
     @JoinColumn(name = "auction_id")
     private Auction auction;
 
+    private String bucket;
+
     @Column(name = "s3_key")
     private String s3Key;
 
     @Builder
-    public File(Auction auction, String s3Key) {
+    public File(Auction auction, String bucket, String s3Key) {
         this.auction = auction;
+        this.bucket = bucket;
         this.s3Key = s3Key;
     }
 }
