@@ -23,8 +23,8 @@ public class FileServiceImpl implements FileService {
         List<String> keyList = new ArrayList<>();
         List<File> initFileList = new ArrayList<>();
 
-        for (MultipartFile file : files) {
-            String fileName = UUID.randomUUID() + file.getOriginalFilename();
+        for (int i = 0; i < files.length; i++) {
+            String fileName = UUID.randomUUID() + files[i].getOriginalFilename();
             String key = "catalog/" + auctionId + "/" + fileName;
 
             keyList.add(key);
@@ -32,6 +32,7 @@ public class FileServiceImpl implements FileService {
                     .auction(new Auction(auctionId))
                     .bucket(bucket)
                     .s3Key(key)
+                    .fileOrder(i + 1)
                     .build());
         }
 

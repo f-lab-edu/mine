@@ -24,10 +24,13 @@ public class File {
     @Column(name = "s3_key")
     private String s3Key;
 
+    private int fileOrder;
+
     @Builder
-    public File(Auction auction, String bucket, String s3Key) {
+    public File(Auction auction, String bucket, String s3Key, int fileOrder) {
         this.auction = auction;
         this.bucket = bucket;
         this.s3Key = s3Key;
+        this.fileOrder = fileOrder;
     }
 }
