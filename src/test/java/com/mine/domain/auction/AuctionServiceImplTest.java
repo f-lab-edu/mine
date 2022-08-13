@@ -45,6 +45,6 @@ public class AuctionServiceImplTest {
 
         AuctionInfo auctionInfo = auctionService.createAuction(command);
 
-        assertEquals(command.getUserId(), auctionInfo.getUserId());
+        assertEquals(1L, auctionInfo.getUserId());
     }
 }
