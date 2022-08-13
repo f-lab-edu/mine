@@ -19,7 +19,7 @@ public class UserDto {
 
         @NotBlank
         @Size(min = 5, max = 20)
-        private String userId;
+        private String signinUserId;
 
         @NotBlank
         @Size(min = 8, max = 16)
@@ -30,7 +30,7 @@ public class UserDto {
 
         public UserCommand toCommand() {
             return UserCommand.builder()
-                    .userId(this.userId)
+                    .signinUserId(this.signinUserId)
                     .password(this.password)
                     .email(this.email)
                     .build();
@@ -40,12 +40,12 @@ public class UserDto {
     @Getter
     public static class SignupResponse {
 
-        private final String userId;
+        private final String signinUserId;
         private final String password;
         private final String email;
 
         public SignupResponse(UserInfo userInfo) {
-            this.userId = userInfo.getUserId();
+            this.signinUserId = userInfo.getSigninUserId();
             this.password = userInfo.getPassword();
             this.email = userInfo.getEmail();
         }

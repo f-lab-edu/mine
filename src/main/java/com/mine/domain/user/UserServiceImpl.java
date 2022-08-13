@@ -15,7 +15,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserInfo signUpUser(UserCommand command) {
-        if (userReader.exists(command.getUserId())) {
+        if (userReader.exists(command.getSigninUserId())) {
             throw new EntityExistsException();
         }
         User initUser = command.toEntity(passwordEncoder);

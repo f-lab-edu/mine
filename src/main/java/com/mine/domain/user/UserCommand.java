@@ -8,13 +8,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class UserCommand {
 
     @Getter
-    private final String userId;
+    private final String signinUserId;
     private final String password;
     private final String email;
 
     public User toEntity(PasswordEncoder passwordEncoder) {
         return User.builder()
-                .userId(this.userId)
+                .signinUserId(this.signinUserId)
                 .password(passwordEncoder.encode(this.password))
                 .email(this.email)
                 .build();

@@ -29,7 +29,7 @@ class UserServiceImplTest {
     @DisplayName("회원가입 성공")
     void signUpUser() {
         UserCommand command = UserCommand.builder()
-                .userId("tester")
+                .signinUserId("tester")
                 .password("password")
                 .email("tester@mine.com")
                 .build();
@@ -37,29 +37,29 @@ class UserServiceImplTest {
         when(passwordEncoder.encode(any())).thenReturn("encodedPassword");
 
         User savedUser = User.builder()
-                .userId("tester")
+                .signinUserId("tester")
                 .password(passwordEncoder.encode("password"))
                 .email("tester@mine.com")
                 .build();
 
-        when(userReader.exists(command.getUserId())).thenReturn(false);
+        when(userReader.exists(command.getSigninUserId())).thenReturn(false);
         when(userStore.store(any())).thenReturn(savedUser);
 
         UserInfo userInfo = userService.signUpUser(command);
 
-        assertEquals(command.getUserId(), userInfo.getUserId());
+        assertEquals(command.getSigninUserId(), userInfo.getSigninUserId());
     }
 
     @Test
     @DisplayName("회원가입 실패_중복 아이디 예외 발생")
-    void throwWhenDuplicateUserId() {
+    void throwWhenDuplicateSigninUserId() {
         UserCommand command = UserCommand.builder()
-                .userId("tester")
+                .signinUserId("tester")
                 .password("password")
                 .email("tester@mine.com")
                 .build();
 
-        when(userReader.exists(command.getUserId())).thenReturn(true);
+        when(userReader.exists(command.getSigninUserId())).thenReturn(true);
 
         EntityExistsException e = assertThrows(EntityExistsException.class, () -> userService.signUpUser(command));
         assertEquals("이미 존재하는 엔티티입니다.", e.getMessage());
