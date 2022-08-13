@@ -10,7 +10,6 @@ import java.time.ZonedDateTime;
 @Builder
 public class AuctionCommand {
 
-    @Getter
     private final Long userId;
 
     private final String title;
