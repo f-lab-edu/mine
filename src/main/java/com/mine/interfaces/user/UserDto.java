@@ -9,9 +9,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-/**
- * static inner class를 사용하여 DTO class 내부에 request 및 response class를 그룹화한다.
- */
 public class UserDto {
 
     @Setter
@@ -40,14 +37,30 @@ public class UserDto {
     @Getter
     public static class SignupResponse {
 
+        private final Long id;
         private final String signinUserId;
         private final String password;
         private final String email;
 
         public SignupResponse(UserInfo userInfo) {
+            this.id = userInfo.getId();
             this.signinUserId = userInfo.getSigninUserId();
             this.password = userInfo.getPassword();
             this.email = userInfo.getEmail();
+        }
+    }
+
+    @Setter
+    public static class SigninRequest {
+
+        private String signinUserId;
+        private String password;
+
+        public UserCommand toCommand() {
+            return UserCommand.builder()
+                    .signinUserId(this.signinUserId)
+                    .password(this.password)
+                    .build();
         }
     }
 }

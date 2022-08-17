@@ -1,5 +1,6 @@
 package com.mine.application.user;
 
+import com.mine.domain.user.TokenInfo;
 import com.mine.domain.user.UserCommand;
 import com.mine.domain.user.UserInfo;
 import com.mine.domain.user.UserService;
@@ -14,5 +15,9 @@ public class UserFacade {
 
     public UserInfo signUpUser(UserCommand command) {
         return userService.signUpUser(command);
+    }
+
+    public TokenInfo signIn(UserCommand command) {
+        return userService.signIn(command);
     }
 }
