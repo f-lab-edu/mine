@@ -26,7 +26,7 @@ public class AuctionDto {
 
         @NotNull
         @PositiveOrZero
-        private Long startingPrice;
+        private long startingPrice;
 
         @NotNull
         private int duration;
@@ -45,12 +45,12 @@ public class AuctionDto {
     @Getter
     public static class CreateAuctionResponse {
 
-        private final Long id;
+        private final long id;
         private final String title;
-        private final Long startingPrice;
+        private final long startingPrice;
         private final String closingTime;
         private final ZonedDateTime utc;
-        private final Long userId;
+        private final long userId;
 
         public CreateAuctionResponse(AuctionInfo auctionInfo) {
             this.id = auctionInfo.getId();

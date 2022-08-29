@@ -7,11 +7,11 @@ import java.time.ZonedDateTime;
 @Getter
 public class AuctionInfo {
 
-    private final Long id;
+    private final long id;
     private final String title;
-    private final Long startingPrice;
+    private final long startingPrice;
     private final ZonedDateTime closingTime;
-    private final Long userId;
+    private final long userId;
 
     public AuctionInfo(Auction auction) {
         this.id = auction.getId();

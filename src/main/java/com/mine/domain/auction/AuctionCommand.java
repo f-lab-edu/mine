@@ -17,7 +17,7 @@ public class AuctionCommand {
     @Getter
     private final MultipartFile[] images;
 
-    private final Long startingPrice;
+    private final long startingPrice;
 
     @Getter
     private final int duration;

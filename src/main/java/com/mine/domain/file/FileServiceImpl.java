@@ -19,7 +19,7 @@ public class FileServiceImpl implements FileService {
     private final FileStore fileStore;
 
     @Override
-    public void uploadFiles(Long auctionId, MultipartFile[] files) {
+    public void uploadFiles(long auctionId, MultipartFile[] files) {
         List<String> keyList = new ArrayList<>();
         List<File> initFileList = new ArrayList<>();
 

@@ -11,7 +11,7 @@ public class FileFacade {
 
     private final FileService fileService;
 
-    public void uploadFiles(Long auctionId, MultipartFile[] files) {
+    public void uploadFiles(long auctionId, MultipartFile[] files) {
         fileService.uploadFiles(auctionId, files);
     }
 }

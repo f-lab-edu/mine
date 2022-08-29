@@ -37,7 +37,7 @@ public class UserDto {
     @Getter
     public static class SignupResponse {
 
-        private final Long id;
+        private final long id;
         private final String signinUserId;
         private final String password;
         private final String email;

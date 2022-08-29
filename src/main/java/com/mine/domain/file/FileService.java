@@ -4,5 +4,5 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface FileService {
 
-    void uploadFiles(Long auctionId, MultipartFile[] files);
+    void uploadFiles(long auctionId, MultipartFile[] files);
 }

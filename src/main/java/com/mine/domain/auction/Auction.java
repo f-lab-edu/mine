@@ -24,12 +24,12 @@ public class Auction {
 
     private String title;
 
-    private Long startingPrice;
+    private long startingPrice;
 
     private ZonedDateTime closingTime;
 
     @Builder
-    public Auction(User user, String title, Long startingPrice, ZonedDateTime closingTime) {
+    public Auction(User user, String title, long startingPrice, ZonedDateTime closingTime) {
         this.user = user;
         this.title = title;
         this.startingPrice = startingPrice;
