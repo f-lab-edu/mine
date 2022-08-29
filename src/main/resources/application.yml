@@ -11,6 +11,24 @@ spring:
       ddl-auto: update
     show-sql: true
 
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+
+cloud:
+
+  aws:
+    credentials:
+      access-key: ${AWS_ACCESSKEY}
+      secret-key: ${AWS_SECRETKEY}
+    s3:
+      bucket: ${AWS_S3_BUCKET}
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+
 # HS512 알고리즘을 사용하기 때문에 Secret Key는 64Byte 이상 사용
 # echo '${JWT_SECRET}'|base64
 # ${JWT_SECRET} 문자열을 Base64로 인코딩한 값

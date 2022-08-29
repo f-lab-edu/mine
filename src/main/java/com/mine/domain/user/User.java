@@ -32,4 +32,8 @@ public class User {
         this.email = email;
         this.authority = authority;
     }
+
+    public User(Long id) {
+        this.id = id;
+    }
 }

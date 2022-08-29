@@ -14,8 +14,8 @@ public class UserReaderImpl implements UserReader {
     private final UserRepository userRepository;
 
     @Override
-    public boolean exists(String userId) {
-        return userRepository.existsBySigninUserId(userId);
+    public boolean exists(String signinUserId) {
+        return userRepository.existsBySigninUserId(signinUserId);
     }
 
     @Override
