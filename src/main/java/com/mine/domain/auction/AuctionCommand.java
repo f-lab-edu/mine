@@ -10,7 +10,7 @@ import java.time.ZonedDateTime;
 @Builder
 public class AuctionCommand {
 
-    private final Long userId;
+    private final long userId;
 
     private final String title;
 
@@ -24,7 +24,7 @@ public class AuctionCommand {
 
     public Auction toEntity(ZonedDateTime closingTime) {
         return Auction.builder()
-                .user(new User(userId))
+                .user(new User(this.userId))
                 .title(this.title)
                 .startingPrice(this.startingPrice)
                 .closingTime(closingTime)

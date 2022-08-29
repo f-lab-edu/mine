@@ -2,6 +2,7 @@ package com.mine.interfaces.auction;
 
 import com.mine.domain.auction.AuctionCommand;
 import com.mine.domain.auction.AuctionInfo;
+import com.mine.util.SecurityUtil;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,8 +21,6 @@ public class AuctionDto {
     @Setter
     public static class CreateAuctionRequest {
 
-        private Long userId;
-
         @NotBlank
         private String title;
 
@@ -34,7 +33,7 @@ public class AuctionDto {
 
         public AuctionCommand toCommand(MultipartFile[] images) {
             return AuctionCommand.builder()
-                    .userId(this.userId)
+                    .userId(SecurityUtil.getCurrentMemberId())
                     .title(this.title)
                     .images(images)
                     .startingPrice(this.startingPrice)
