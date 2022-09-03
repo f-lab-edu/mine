@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.net.URL;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AuctionFacade {
@@ -20,5 +23,12 @@ public class AuctionFacade {
         AuctionInfo info = auctionService.createAuction(command);
         fileFacade.uploadFiles(info.getId(), command.getImages());
         return info;
+    }
+
+    public AuctionInfo showCatalog(Long auctionId) {
+        AuctionInfo auctionInfo = auctionService.showCatalog(auctionId);
+        List<URL> fileUrls = fileFacade.downloadFiles(auctionId);
+        auctionInfo.setFileUrls(fileUrls);
+        return auctionInfo;
     }
 }

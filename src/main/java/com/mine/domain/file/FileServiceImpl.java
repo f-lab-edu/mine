@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import java.net.URL;
+
 @Service
 @RequiredArgsConstructor
 public class FileServiceImpl implements FileService {
@@ -17,6 +19,7 @@ public class FileServiceImpl implements FileService {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
     private final FileStore fileStore;
+    private final FileReader fileReader;
 
     @Override
     public void uploadFiles(long auctionId, MultipartFile[] files) {
@@ -29,7 +32,7 @@ public class FileServiceImpl implements FileService {
 
             keyList.add(key);
             initFileList.add(File.builder()
-                    .auction(new Auction(auctionId))
+                    .auction(Auction.builder().id(auctionId).build())
                     .bucket(bucket)
                     .s3Key(key)
                     .fileOrder(i + 1)
@@ -38,5 +41,17 @@ public class FileServiceImpl implements FileService {
 
         fileStore.storeToS3(files, keyList);
         fileStore.storeToDatabase(initFileList);
+    }
+
+    @Override
+    public List<URL> downloadFiles(Long auctionId) {
+        List<File> files = fileReader.readAllFromDatabase(auctionId);
+        List<URL> fileUrls = new ArrayList<>();
+
+        for (File file : files) {
+            fileUrls.add(fileReader.readFromS3(file.getS3Key()));
+        }
+
+        return fileUrls;
     }
 }

@@ -35,7 +35,8 @@ public class AuctionServiceImplTest {
                 .build();
 
         Auction savedAuction = Auction.builder()
-                .user(new User(1L))
+                .id(1L)
+                .user(User.builder().id(1L).build())
                 .title("New Auction")
                 .startingPrice(50000L)
                 .closingTime(ZonedDateTime.now(ZoneId.of("UTC")).plusDays(command.getDuration()))
@@ -45,6 +46,21 @@ public class AuctionServiceImplTest {
 
         AuctionInfo auctionInfo = auctionService.createAuction(command);
 
-        assertEquals(1L, auctionInfo.getUserId());
+        assertEquals(savedAuction.getId(), auctionInfo.getId());
+    }
+
+    @DisplayName("경매 카탈로그 조회")
+    void showCatalog() {
+        Auction readAuction = Auction.builder()
+                .id(1L)
+                .user(User.builder().id(1L).build())
+                .title("New Auction")
+                .startingPrice(50000L)
+                .closingTime(ZonedDateTime.parse("2022-08-12 12:37:09"))
+                .build();
+
+        AuctionInfo auctionInfo = auctionService.showCatalog(1L);
+
+        assertEquals(1L, auctionInfo.getId());
     }
 }

@@ -10,11 +10,15 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
+
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AuctionDto {
 
@@ -59,6 +63,31 @@ public class AuctionDto {
             this.closingTime = getLocalClosingTime(auctionInfo.getClosingTime());
             this.utc = auctionInfo.getClosingTime();
             this.userId = auctionInfo.getUserId();
+        }
+
+        private String getLocalClosingTime(ZonedDateTime utc) {
+            LocalDateTime time = utc.withZoneSameInstant(ZoneId.of("Asia/Seoul")).toLocalDateTime();    // UTC 협정 세계시를 ZoneId 지역의 날짜/시간으로 변경
+            return DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL, FormatStyle.SHORT).format(time);
+        }
+    }
+
+    @Getter
+    public static class CatalogResponse {
+
+        private final Long id;
+        private final String title;
+        private final Long startingPrice;
+        private final String closingTime;
+        private final Long userId;
+        private final List<URL> fileUrls;
+
+        public CatalogResponse(AuctionInfo auctionInfo) {
+            this.id = auctionInfo.getId();
+            this.title = auctionInfo.getTitle();
+            this.startingPrice = auctionInfo.getStartingPrice();
+            this.closingTime = getLocalClosingTime(auctionInfo.getClosingTime());
+            this.userId = auctionInfo.getUserId();
+            this.fileUrls = new ArrayList<>(auctionInfo.getFileUrls());
         }
 
         private String getLocalClosingTime(ZonedDateTime utc) {

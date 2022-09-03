@@ -5,6 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.net.URL;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class FileFacade {
@@ -13,5 +16,9 @@ public class FileFacade {
 
     public void uploadFiles(long auctionId, MultipartFile[] files) {
         fileService.uploadFiles(auctionId, files);
+    }
+
+    public List<URL> downloadFiles(Long auctionId) {
+        return fileService.downloadFiles(auctionId);
     }
 }
