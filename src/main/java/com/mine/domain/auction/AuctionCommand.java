@@ -24,7 +24,7 @@ public class AuctionCommand {
 
     public Auction toEntity(ZonedDateTime closingTime) {
         return Auction.builder()
-                .user(new User(this.userId))
+                .user(User.builder().id(this.userId).build())
                 .title(this.title)
                 .startingPrice(this.startingPrice)
                 .closingTime(closingTime)

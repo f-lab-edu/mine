@@ -1,6 +1,7 @@
 package com.mine.domain.file;
 
 import com.mine.domain.auction.Auction;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "file")
 public class File {
@@ -27,12 +30,4 @@ public class File {
     private String s3Key;
 
     private int fileOrder;
-
-    @Builder
-    public File(Auction auction, String bucket, String s3Key, int fileOrder) {
-        this.auction = auction;
-        this.bucket = bucket;
-        this.s3Key = s3Key;
-        this.fileOrder = fileOrder;
-    }
 }

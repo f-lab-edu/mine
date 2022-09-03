@@ -1,6 +1,7 @@
 package com.mine.domain.auction;
 
 import com.mine.domain.user.User;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,8 @@ import java.time.ZonedDateTime;
 
 @Entity
 @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "auction")
 public class Auction {
@@ -27,16 +30,4 @@ public class Auction {
     private long startingPrice;
 
     private ZonedDateTime closingTime;
-
-    @Builder
-    public Auction(User user, String title, long startingPrice, ZonedDateTime closingTime) {
-        this.user = user;
-        this.title = title;
-        this.startingPrice = startingPrice;
-        this.closingTime = closingTime;
-    }
-
-    public Auction(Long id) {
-        this.id = id;
-    }
 }

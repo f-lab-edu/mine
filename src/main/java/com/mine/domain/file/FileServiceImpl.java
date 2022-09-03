@@ -32,7 +32,7 @@ public class FileServiceImpl implements FileService {
 
             keyList.add(key);
             initFileList.add(File.builder()
-                    .auction(new Auction(auctionId))
+                    .auction(Auction.builder().id(auctionId).build())
                     .bucket(bucket)
                     .s3Key(key)
                     .fileOrder(i + 1)

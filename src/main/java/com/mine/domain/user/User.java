@@ -1,5 +1,6 @@
 package com.mine.domain.user;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,8 @@ import javax.persistence.*;
 
 @Entity
 @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "user")
 public class User {
@@ -24,16 +27,4 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Authority authority;
-
-    @Builder
-    public User(String signinUserId, String password, String email, Authority authority) {
-        this.signinUserId = signinUserId;
-        this.password = password;
-        this.email = email;
-        this.authority = authority;
-    }
-
-    public User(Long id) {
-        this.id = id;
-    }
 }
