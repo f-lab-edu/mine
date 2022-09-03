@@ -57,6 +57,7 @@ class UserServiceImplTest {
         when(passwordEncoder.encode(any())).thenReturn("encodedPassword");
 
         User savedUser = User.builder()
+                .id(1L)
                 .signinUserId("tester")
                 .password(passwordEncoder.encode("password"))
                 .email("tester@mine.com")
@@ -68,7 +69,7 @@ class UserServiceImplTest {
 
         UserInfo userInfo = userService.signUpUser(command);
 
-        assertEquals(command.getSigninUserId(), userInfo.getSigninUserId());
+        assertEquals(savedUser.getId(), userInfo.getId());
     }
 
     @Test
