@@ -48,4 +48,19 @@ public class AuctionServiceImplTest {
 
         assertEquals(savedAuction.getId(), auctionInfo.getId());
     }
+
+    @DisplayName("경매 카탈로그 조회")
+    void showCatalog() {
+        Auction readAuction = Auction.builder()
+                .id(1L)
+                .user(User.builder().id(1L).build())
+                .title("New Auction")
+                .startingPrice(50000L)
+                .closingTime(ZonedDateTime.parse("2022-08-12 12:37:09"))
+                .build();
+
+        AuctionInfo auctionInfo = auctionService.showCatalog(1L);
+
+        assertEquals(1L, auctionInfo.getId());
+    }
 }
