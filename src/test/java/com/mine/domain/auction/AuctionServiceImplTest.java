@@ -23,6 +23,9 @@ public class AuctionServiceImplTest {
     AuctionStore auctionStore;
 
     @Mock
+    AuctionReader auctionReader;
+
+    @Mock
     HighestBidStore highestBidStore;
 
     @InjectMocks
@@ -53,6 +56,7 @@ public class AuctionServiceImplTest {
         assertEquals(savedAuction.getId(), auctionInfo.getId());
     }
 
+    @Test
     @DisplayName("경매 카탈로그 조회")
     void showCatalog() {
         Auction readAuction = Auction.builder()
@@ -60,8 +64,10 @@ public class AuctionServiceImplTest {
                 .user(User.builder().id(1L).build())
                 .title("New Auction")
                 .startingPrice(50000L)
-                .closingTime(ZonedDateTime.parse("2022-08-12 12:37:09"))
+                .closingTime(ZonedDateTime.parse("2022-08-20T15:28:53.444790Z[UTC]"))
                 .build();
+
+        when(auctionReader.read(1L)).thenReturn(readAuction);
 
         AuctionInfo auctionInfo = auctionService.showCatalog(1L);
 
