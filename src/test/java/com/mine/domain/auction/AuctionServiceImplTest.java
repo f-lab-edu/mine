@@ -1,5 +1,6 @@
 package com.mine.domain.auction;
 
+import com.mine.domain.bid.HighestBidStore;
 import com.mine.domain.user.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,9 @@ public class AuctionServiceImplTest {
 
     @Mock
     AuctionStore auctionStore;
+
+    @Mock
+    HighestBidStore highestBidStore;
 
     @InjectMocks
     AuctionServiceImpl auctionService;
