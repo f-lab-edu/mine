@@ -1,5 +1,7 @@
 package com.mine.domain.auction;
 
+import com.mine.domain.bid.HighestBid;
+import com.mine.domain.bid.HighestBidStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +14,19 @@ public class AuctionServiceImpl implements AuctionService {
 
     private final AuctionStore auctionStore;
     private final AuctionReader auctionReader;
+    private final HighestBidStore highestBidStore;
 
     @Override
     public AuctionInfo createAuction(AuctionCommand command) {
+        // 경매 생성
         ZonedDateTime closingTime = ZonedDateTime.now(ZoneId.of("UTC")).plusDays(command.getDuration());    // 경매 지속일을 더한 날짜/시간
         Auction initAuction = command.toEntity(closingTime);
         Auction auction = auctionStore.store(initAuction);
+
+        // 최고 입찰가를 경매 시작가로 초기화
+        HighestBid initHighestBid = command.toEntity(auction.getId());
+        highestBidStore.store(initHighestBid);
+
         return new AuctionInfo(auction);
     }
 

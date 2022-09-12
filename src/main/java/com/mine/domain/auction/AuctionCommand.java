@@ -1,5 +1,6 @@
 package com.mine.domain.auction;
 
+import com.mine.domain.bid.HighestBid;
 import com.mine.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,6 +29,14 @@ public class AuctionCommand {
                 .title(this.title)
                 .startingPrice(this.startingPrice)
                 .closingTime(closingTime)
+                .build();
+    }
+
+    public HighestBid toEntity(Long auctionId) {
+        return HighestBid.builder()
+                .auction(Auction.builder().id(auctionId).build())
+                .user(User.builder().id(this.userId).build())
+                .highestPrice(this.startingPrice)
                 .build();
     }
 }
