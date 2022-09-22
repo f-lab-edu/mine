@@ -3,6 +3,7 @@ package com.mine.domain.bid;
 import com.mine.common.exception.AuctionAlreadyClosedException;
 import com.mine.common.exception.HighestBidPriceUpdateException;
 import com.mine.domain.user.User;
+import com.mine.util.IncrementUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,14 +31,16 @@ public class BidServiceImpl implements BidService {
             throw new AuctionAlreadyClosedException();
         }
 
-        // 최고 입찰가보다 낮은 입찰가로 입찰할 경우 입찰 실패
-        if(command.getPrice() <= currentHighestBid.getHighestPrice()) {
+        // 입찰 가능한 최소 입찰가(최고 입찰가 + 증분)보다 낮은 입찰가로 입찰할 경우 입찰 실패
+        if(command.getPrice() <= currentHighestBid.getAtLeast()) {
             throw new HighestBidPriceUpdateException();
         }
 
-        // 최고 입찰가 갱신
+        // '최고 입찰가' 및 '입찰 가능한 최소 입찰가' 갱신
         currentHighestBid.setUser(User.builder().id(command.getUserId()).build());
         currentHighestBid.setHighestPrice(command.getPrice());
+        int increment = IncrementUtil.getIncrement(command.getPrice());     // 입찰가 증분 계산
+        currentHighestBid.setAtLeast(command.getPrice() + increment);
         highestBidStore.store(currentHighestBid);
 
         // 입찰 내역 반영
