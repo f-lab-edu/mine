@@ -12,7 +12,7 @@ public class HighestBidStoreImpl implements HighestBidStore {
     private final HighestBidRepository highestBidRepository;
 
     @Override
-    public void store(HighestBid newHighestBid) {
-        highestBidRepository.save(newHighestBid);
+    public HighestBid store(HighestBid newHighestBid) {
+        return highestBidRepository.save(newHighestBid);
     }
 }

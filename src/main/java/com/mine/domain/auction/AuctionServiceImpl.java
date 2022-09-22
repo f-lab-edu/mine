@@ -23,10 +23,11 @@ public class AuctionServiceImpl implements AuctionService {
         Auction initAuction = command.toEntity(closingTime);
         Auction auction = auctionStore.store(initAuction);
 
-        // 최고 입찰가를 경매 시작가로 초기화
+        // 입찰 가능한 최소 입찰가를 경매 시작가로 초기화
         HighestBid initHighestBid = command.toEntity(auction.getId());
-        highestBidStore.store(initHighestBid);
+        HighestBid highestBid = highestBidStore.store(initHighestBid);
 
+        auction.setHighestBid(highestBid);
         return new AuctionInfo(auction);
     }
 
