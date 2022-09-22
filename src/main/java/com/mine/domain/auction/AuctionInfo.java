@@ -15,7 +15,10 @@ public class AuctionInfo {
     private final String title;
     private final long startingPrice;
     private final ZonedDateTime closingTime;
+    private final long highestPrice;
+    private final long atLeast;
     private final long userId;
+
     @Setter
     private List<URL> fileUrls = new ArrayList<>();
 
@@ -24,6 +27,8 @@ public class AuctionInfo {
         this.title = auction.getTitle();
         this.startingPrice = auction.getStartingPrice();
         this.closingTime = auction.getClosingTime();
+        this.highestPrice = auction.getHighestBid().getHighestPrice();
+        this.atLeast = auction.getHighestBid().getAtLeast();
         this.userId = auction.getUser().getId();
     }
 }

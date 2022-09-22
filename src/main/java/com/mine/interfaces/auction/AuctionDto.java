@@ -54,6 +54,8 @@ public class AuctionDto {
         private final long startingPrice;
         private final String closingTime;
         private final ZonedDateTime utc;
+        private final long highestPrice;
+        private final long atLeast;
         private final long userId;
 
         public CreateAuctionResponse(AuctionInfo auctionInfo) {
@@ -62,6 +64,8 @@ public class AuctionDto {
             this.startingPrice = auctionInfo.getStartingPrice();
             this.closingTime = getLocalClosingTime(auctionInfo.getClosingTime());
             this.utc = auctionInfo.getClosingTime();
+            this.highestPrice = auctionInfo.getHighestPrice();
+            this.atLeast = auctionInfo.getAtLeast();
             this.userId = auctionInfo.getUserId();
         }
 
@@ -78,6 +82,8 @@ public class AuctionDto {
         private final String title;
         private final Long startingPrice;
         private final String closingTime;
+        private final long highestPrice;
+        private final long atLeast;
         private final Long userId;
         private final List<URL> fileUrls;
 
@@ -86,6 +92,8 @@ public class AuctionDto {
             this.title = auctionInfo.getTitle();
             this.startingPrice = auctionInfo.getStartingPrice();
             this.closingTime = getLocalClosingTime(auctionInfo.getClosingTime());
+            this.highestPrice = auctionInfo.getHighestPrice();
+            this.atLeast = auctionInfo.getAtLeast();
             this.userId = auctionInfo.getUserId();
             this.fileUrls = new ArrayList<>(auctionInfo.getFileUrls());
         }
