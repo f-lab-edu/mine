@@ -52,6 +52,7 @@ public class BidServiceImplTest {
         HighestBid currentHighestBid = HighestBid.builder()
                 .auction(Auction.builder().closingTime(ZonedDateTime.parse("2100-10-25T08:28:53.444790Z[UTC]")).build())
                 .highestPrice(50000)
+                .atLeast(52000)
                 .build();
 
         BidHistory savedOneHistory = BidHistory.builder()
@@ -77,6 +78,7 @@ public class BidServiceImplTest {
         HighestBid currentHighestBid = HighestBid.builder()
                 .auction(Auction.builder().closingTime(ZonedDateTime.parse("2022-08-20T15:28:53.444790Z[UTC]")).build())
                 .highestPrice(50000)
+                .atLeast(52000)
                 .build();
 
         when(highestBidReader.findByAuctionId(command.getAuctionId())).thenReturn(currentHighestBid);
@@ -87,17 +89,18 @@ public class BidServiceImplTest {
     }
 
     @Test
-    @DisplayName("최고 입찰가보다 낮은 입찰가로 입찰한 경우 입찰 실패")
+    @DisplayName("입찰 가능한 최소 입찰가 미만으로 입찰한 경우 입찰 실패")
     void throwWhenLowBiddingPrice() {
         HighestBid currentHighestBid = HighestBid.builder()
                 .auction(Auction.builder().closingTime(ZonedDateTime.parse("2100-10-25T08:28:53.444790Z[UTC]")).build())
                 .highestPrice(500000)
+                .atLeast(507500)
                 .build();
 
         when(highestBidReader.findByAuctionId(command.getAuctionId())).thenReturn(currentHighestBid);
 
         HighestBidPriceUpdateException e = assertThrows(HighestBidPriceUpdateException.class, () -> bidService.bid(command));
 
-        assertEquals("입찰에 실패했습니다. 현재 최고 입찰가보다 높은 입찰가로 다시 시도해주세요.", e.getMessage());
+        assertEquals("입찰에 실패했습니다. 입찰 가능한 최소 입찰가 이상으로 다시 입찰해 주세요.", e.getMessage());
     }
 }
