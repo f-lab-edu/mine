@@ -1,10 +1,8 @@
 package com.mine.domain.auction;
 
+import com.mine.domain.bid.HighestBid;
 import com.mine.domain.user.User;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
@@ -30,4 +28,8 @@ public class Auction {
     private long startingPrice;
 
     private ZonedDateTime closingTime;
+
+    @Setter
+    @OneToOne(mappedBy = "auction")
+    private HighestBid highestBid;
 }

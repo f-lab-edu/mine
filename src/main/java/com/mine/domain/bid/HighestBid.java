@@ -29,4 +29,7 @@ public class HighestBid {
 
     @Setter
     private long highestPrice;
+
+    @Setter
+    private long atLeast;
 }
