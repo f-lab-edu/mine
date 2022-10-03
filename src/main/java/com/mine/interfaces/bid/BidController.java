@@ -5,21 +5,18 @@ import com.mine.domain.bid.BidCommand;
 import com.mine.domain.bid.BidInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/bid")
+@RequestMapping("/auction/{auctionId}")
 public class BidController {
 
     private final BidFacade bidFacade;
 
-    @PostMapping
-    public ResponseEntity<BidDto.BidResponse> bid(@RequestBody BidDto.BidRequest request) {
-        BidCommand command = request.toCommand();
+    @PostMapping("/bid")
+    public ResponseEntity<BidDto.BidResponse> bid(@PathVariable long auctionId, @RequestBody BidDto.BidRequest request) {
+        BidCommand command = request.toCommand(auctionId);
         BidInfo bidInfo = bidFacade.bid(command);
         BidDto.BidResponse response = new BidDto.BidResponse(bidInfo);
         return ResponseEntity.ok(response);

@@ -17,12 +17,11 @@ public class BidDto {
     @Setter
     public static class BidRequest {
 
-        private long auctionId;
         private long price;
 
-        public BidCommand toCommand() {
+        public BidCommand toCommand(long auctionId) {
             return BidCommand.builder()
-                    .auctionId(this.auctionId)
+                    .auctionId(auctionId)
                     .userId(SecurityUtil.getCurrentMemberId())
                     .price(this.price)
                     .build();
