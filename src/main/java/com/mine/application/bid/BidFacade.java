@@ -1,5 +1,6 @@
 package com.mine.application.bid;
 
+import com.mine.domain.bid.AutoBidCommand;
 import com.mine.domain.bid.BidCommand;
 import com.mine.domain.bid.BidInfo;
 import com.mine.domain.bid.BidService;
@@ -14,5 +15,9 @@ public class BidFacade {
 
     public BidInfo bid(BidCommand command) {
         return bidService.bid(command);
+    }
+
+    public BidInfo autoBid(AutoBidCommand command) {
+        return bidService.autoBid(command);
     }
 }
