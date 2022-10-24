@@ -35,8 +35,8 @@ public class BidServiceImpl implements BidService {
             throw new AuctionAlreadyClosedException();
         }
 
-        // 입찰 가능한 최소 입찰가(최고 입찰가 + 증분)보다 낮은 입찰가로 입찰할 경우 입찰 실패
-        if(command.getPrice() <= currentHighestBid.getAtLeast()) {
+        // 입찰 금액이 입찰 가능 최소 금액보다 적을 경우 입찰 실패
+        if(command.getPrice() < currentHighestBid.getAtLeast()) {
             throw new HighestBidPriceUpdateException();
         }
 
