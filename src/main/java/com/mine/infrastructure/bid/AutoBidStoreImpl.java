@@ -30,7 +30,7 @@ public class AutoBidStoreImpl implements AutoBidStore {
 
     @Override
     public void deleteByAuctionId(long auctionId) {
-        autoBidRepository.deleteById(auctionId);
+        autoBidRepository.deleteByAuctionId(auctionId);
     }
 
     @Override

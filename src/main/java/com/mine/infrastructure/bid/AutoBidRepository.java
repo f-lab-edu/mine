@@ -12,4 +12,6 @@ public interface AutoBidRepository extends JpaRepository<AutoBid, Long> {
     void update(long auctionId, long userId, long limit);
 
     AutoBid findByAuctionId(long auctionId);
+
+    void deleteByAuctionId(long auctionId);
 }
