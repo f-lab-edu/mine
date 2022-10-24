@@ -16,9 +16,9 @@ public class BidController {
     private final BidFacade bidFacade;
 
     @PostMapping("/bid")
-    public ResponseEntity<BidDto.BidResponse> bid(@PathVariable long auctionId, @RequestBody BidDto.BidRequest request) {
+    public ResponseEntity<BidDto.BidResponse> manualBid(@PathVariable long auctionId, @RequestBody BidDto.BidRequest request) {
         BidCommand command = request.toCommand(auctionId);
-        BidInfo bidInfo = bidFacade.bid(command);
+        BidInfo bidInfo = bidFacade.manualBid(command);
         BidDto.BidResponse response = new BidDto.BidResponse(bidInfo);
         return ResponseEntity.ok(response);
     }

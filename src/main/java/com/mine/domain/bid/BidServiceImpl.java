@@ -25,7 +25,7 @@ public class BidServiceImpl implements BidService {
 
     @Override
     @Transactional
-    public BidInfo bid(BidCommand manualBid) {
+    public BidInfo manualBid(BidCommand manualBid) {
         HighestBid currentHighestBid = highestBidReader.findByAuctionId(manualBid.getAuctionId());
         ZonedDateTime closingTime = currentHighestBid.getAuction().getClosingTime();
         ZonedDateTime biddingTime = ZonedDateTime.now(ZoneId.of("UTC"));

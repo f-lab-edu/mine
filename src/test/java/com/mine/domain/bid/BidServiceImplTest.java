@@ -66,7 +66,7 @@ public class BidServiceImplTest {
         when(highestBidReader.findByAuctionId(command.getAuctionId())).thenReturn(currentHighestBid);
         when(bidHistoryStore.store(any())).thenReturn(savedOneHistory);
 
-        BidInfo bidInfo = bidService.bid(command);
+        BidInfo bidInfo = bidService.manualBid(command);
 
         assertEquals(command.getUserId(), bidInfo.getUserId());
         assertEquals(command.getPrice(), bidInfo.getBiddingPrice());
@@ -83,7 +83,7 @@ public class BidServiceImplTest {
 
         when(highestBidReader.findByAuctionId(command.getAuctionId())).thenReturn(currentHighestBid);
 
-        AuctionAlreadyClosedException e = assertThrows(AuctionAlreadyClosedException.class, () -> bidService.bid(command));
+        AuctionAlreadyClosedException e = assertThrows(AuctionAlreadyClosedException.class, () -> bidService.manualBid(command));
 
         assertEquals("이미 마감된 경매입니다. 더 이상 입찰할 수 없습니다.", e.getMessage());
     }
@@ -99,7 +99,7 @@ public class BidServiceImplTest {
 
         when(highestBidReader.findByAuctionId(command.getAuctionId())).thenReturn(currentHighestBid);
 
-        HighestBidPriceUpdateException e = assertThrows(HighestBidPriceUpdateException.class, () -> bidService.bid(command));
+        HighestBidPriceUpdateException e = assertThrows(HighestBidPriceUpdateException.class, () -> bidService.manualBid(command));
 
         assertEquals("입찰에 실패했습니다. 입찰 가능한 최소 입찰가 이상으로 다시 입찰해 주세요.", e.getMessage());
     }
