@@ -15,7 +15,7 @@ public class BidCommand {
     private final long userId;
     private final long price;
 
-    public BidHistory toEntity(ZonedDateTime biddingTime) {
+    public BidHistory toHistoryEntity(ZonedDateTime biddingTime) {
         return BidHistory.builder()
                 .auction(Auction.builder().id(this.auctionId).build())
                 .user(User.builder().id(this.userId).build())

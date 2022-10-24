@@ -25,8 +25,8 @@ public class BidServiceImpl implements BidService {
 
     @Override
     @Transactional
-    public BidInfo bid(BidCommand command) {
-        HighestBid currentHighestBid = highestBidReader.findByAuctionId(command.getAuctionId());
+    public BidInfo bid(BidCommand manualBid) {
+        HighestBid currentHighestBid = highestBidReader.findByAuctionId(manualBid.getAuctionId());
         ZonedDateTime closingTime = currentHighestBid.getAuction().getClosingTime();
         ZonedDateTime biddingTime = ZonedDateTime.now(ZoneId.of("UTC"));
 
@@ -36,23 +36,23 @@ public class BidServiceImpl implements BidService {
         }
 
         // 입찰 금액이 입찰 가능 최소 금액보다 적을 경우 입찰 실패
-        if(command.getPrice() < currentHighestBid.getAtLeast()) {
+        if(manualBid.getPrice() < currentHighestBid.getAtLeast()) {
             throw new HighestBidPriceUpdateException();
         }
 
-        // '최고 입찰가' 및 '입찰 가능한 최소 입찰가' 갱신
-        currentHighestBid.setUser(User.builder().id(command.getUserId()).build());
-        currentHighestBid.setHighestPrice(command.getPrice());
-        int increment = IncrementUtil.getIncrement(command.getPrice());     // 입찰가 증분 계산
-        currentHighestBid.setAtLeast(command.getPrice() + increment);
-        highestBidStore.store(currentHighestBid);
+        // 수동 입찰 수행
+        BidHistory manualBidHistory = bidManualUsingRequestedAmount(manualBid, biddingTime);
+        long nextMinimumBidAmount = updateHighestBidToManualBid(manualBid, currentHighestBid);
 
-        // 입찰 내역 반영
-        BidHistory initBidHistory = command.toEntity(biddingTime);
-        BidHistory oneHistory = bidHistoryStore.store(initBidHistory);
+        // 현 경매에 등록된 자동 입찰 확인
+        AutoBidDto existingAutoBid = findAutoBid(manualBid.getAuctionId());
 
-        // 반영된 내역 반환
-        return new BidInfo(oneHistory);
+        // 자동 입찰 수행
+        if (existingAutoBid != null) {
+            executeExistingAutoBid(existingAutoBid, nextMinimumBidAmount, biddingTime, currentHighestBid);
+        }
+
+        return new BidInfo(manualBidHistory);
     }
 
     @Override
@@ -92,6 +92,24 @@ public class BidServiceImpl implements BidService {
             autoBidDto = autoBidReader.findByAuctionId(auctionId);
         }
         return autoBidDto;
+    }
+
+    public void executeExistingAutoBid(AutoBidDto existingAutoBid, long minimumBidAmount, ZonedDateTime biddingTime, HighestBid currentHighestBid) {
+        if (existingAutoBid.getLimit() > minimumBidAmount) {
+            bidExistingUsingMinimumAmount(existingAutoBid, minimumBidAmount, biddingTime);
+            long nextMinimumBidAmount = updateHighestBidToExistingAutoBid(existingAutoBid, minimumBidAmount, currentHighestBid);
+
+            if (existingAutoBid.getLimit() >= nextMinimumBidAmount) {
+                registerExistingAutoBidInCache(existingAutoBid);
+            } else if (existingAutoBid.getLimit() < nextMinimumBidAmount) {
+                deleteExistingAutoBid(existingAutoBid);
+            }
+
+        } else if (existingAutoBid.getLimit() <= minimumBidAmount) {
+            bidExistingUsingLimit(existingAutoBid, biddingTime);
+            updateHighestBidToExistingAutoBid(existingAutoBid, existingAutoBid.getLimit(), currentHighestBid);
+            deleteExistingAutoBid(existingAutoBid);
+        }
     }
 
     public BidHistory register(AutoBidCommand newAutoBid, ZonedDateTime biddingTime, HighestBid currentHighestBid) {
@@ -175,6 +193,11 @@ public class BidServiceImpl implements BidService {
         return newAutoBidHistory;
     }
 
+    public BidHistory bidManualUsingRequestedAmount(BidCommand manualBid, ZonedDateTime biddingTime) {
+        BidHistory initManualBidHistory = manualBid.toHistoryEntity(biddingTime);
+        return bidHistoryStore.store(initManualBidHistory);
+    }
+
     public BidHistory bidNewUsingMinimumAmount(AutoBidCommand newAutoBid, long minimumAmount, ZonedDateTime biddingTime) {
         BidHistory initNewAutoBidHistory = newAutoBid.toBidHistoryEntity(minimumAmount, biddingTime);
         return bidHistoryStore.store(initNewAutoBidHistory);
@@ -193,6 +216,15 @@ public class BidServiceImpl implements BidService {
     public BidHistory bidExistingUsingLimit(AutoBidDto existingAutoBid, ZonedDateTime biddingTime) {
         BidHistory initExistingAutoBid = existingAutoBid.toBidHistoryEntity(biddingTime);
         return bidHistoryStore.store(initExistingAutoBid);
+    }
+
+    public long updateHighestBidToManualBid(BidCommand manualBid, HighestBid currentHighestBid) {
+        long nextMinimumBidAmount = calculateNextMinimumBidAmount(manualBid.getPrice());
+        currentHighestBid.setHighestPrice(manualBid.getPrice());
+        currentHighestBid.setAtLeast(nextMinimumBidAmount);
+        currentHighestBid.setUser(User.builder().id(manualBid.getUserId()).build());
+        highestBidStore.store(currentHighestBid);
+        return nextMinimumBidAmount;
     }
 
     public long updateHighestBidToNewAutoBid(AutoBidCommand newAutoBid, long biddingAmount, HighestBid currentHighestBid) {
