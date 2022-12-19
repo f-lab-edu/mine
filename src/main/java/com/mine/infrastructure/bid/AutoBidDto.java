@@ -31,6 +31,7 @@ public class AutoBidDto {
                 .auctionId(this.auctionId)
                 .userId(this.userId)
                 .limit(this.getLimit())
+                .expiryTime(1)
                 .build();
     }
 
