@@ -49,7 +49,7 @@ public class BidServiceImpl implements BidService {
 
         // 자동 입찰 수행
         if (existingAutoBid != null) {
-            executeExistingAutoBid(existingAutoBid, nextMinimumBidAmount, biddingTime, currentHighestBid);
+            executeExistingAutoBid(existingAutoBid, nextMinimumBidAmount, biddingTime, currentHighestBid, manualBid.getPrice());
         }
 
         return new BidInfo(manualBidHistory);
@@ -94,7 +94,7 @@ public class BidServiceImpl implements BidService {
         return autoBidDto;
     }
 
-    public void executeExistingAutoBid(AutoBidDto existingAutoBid, long minimumBidAmount, ZonedDateTime biddingTime, HighestBid currentHighestBid) {
+    public void executeExistingAutoBid(AutoBidDto existingAutoBid, long minimumBidAmount, ZonedDateTime biddingTime, HighestBid currentHighestBid, long manualBidPrice) {
         if (existingAutoBid.getLimit() > minimumBidAmount) {
             bidExistingUsingMinimumAmount(existingAutoBid, minimumBidAmount, biddingTime);
             long nextMinimumBidAmount = updateHighestBidToExistingAutoBid(existingAutoBid, minimumBidAmount, currentHighestBid);
@@ -107,7 +107,9 @@ public class BidServiceImpl implements BidService {
 
         } else if (existingAutoBid.getLimit() <= minimumBidAmount) {
             bidExistingUsingLimit(existingAutoBid, biddingTime);
-            updateHighestBidToExistingAutoBid(existingAutoBid, existingAutoBid.getLimit(), currentHighestBid);
+            if (existingAutoBid.getLimit() >= manualBidPrice) {
+                updateHighestBidToExistingAutoBid(existingAutoBid, existingAutoBid.getLimit(), currentHighestBid);
+            }
             deleteExistingAutoBid(existingAutoBid);
         }
     }
