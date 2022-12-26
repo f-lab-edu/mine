@@ -1,26 +1,32 @@
 package com.mine.interfaces.bid;
 
 import com.mine.application.bid.BidFacade;
+import com.mine.domain.bid.AutoBidCommand;
 import com.mine.domain.bid.BidCommand;
 import com.mine.domain.bid.BidInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/bid")
+@RequestMapping("/auction/{auctionId}")
 public class BidController {
 
     private final BidFacade bidFacade;
 
-    @PostMapping
-    public ResponseEntity<BidDto.BidResponse> bid(@RequestBody BidDto.BidRequest request) {
-        BidCommand command = request.toCommand();
-        BidInfo bidInfo = bidFacade.bid(command);
+    @PostMapping("/bid")
+    public ResponseEntity<BidDto.BidResponse> manualBid(@PathVariable long auctionId, @RequestBody BidDto.BidRequest request) {
+        BidCommand command = request.toCommand(auctionId);
+        BidInfo bidInfo = bidFacade.manualBid(command);
+        BidDto.BidResponse response = new BidDto.BidResponse(bidInfo);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/auto-bid")
+    public ResponseEntity<BidDto.BidResponse> autoBid(@PathVariable long auctionId, @RequestBody BidDto.AutoBidRequest request) {
+        AutoBidCommand command = request.toCommand(auctionId);
+        BidInfo bidInfo = bidFacade.autoBid(command);
         BidDto.BidResponse response = new BidDto.BidResponse(bidInfo);
         return ResponseEntity.ok(response);
     }

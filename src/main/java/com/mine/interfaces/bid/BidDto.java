@@ -1,5 +1,6 @@
 package com.mine.interfaces.bid;
 
+import com.mine.domain.bid.AutoBidCommand;
 import com.mine.domain.bid.BidCommand;
 import com.mine.domain.bid.BidInfo;
 import com.mine.util.SecurityUtil;
@@ -17,14 +18,27 @@ public class BidDto {
     @Setter
     public static class BidRequest {
 
-        private long auctionId;
         private long price;
 
-        public BidCommand toCommand() {
+        public BidCommand toCommand(long auctionId) {
             return BidCommand.builder()
-                    .auctionId(this.auctionId)
+                    .auctionId(auctionId)
                     .userId(SecurityUtil.getCurrentMemberId())
                     .price(this.price)
+                    .build();
+        }
+    }
+
+    @Setter
+    public static class AutoBidRequest {
+
+        private long limit;
+
+        public AutoBidCommand toCommand(long auctionId) {
+            return AutoBidCommand.builder()
+                    .auctionId(auctionId)
+                    .userId(SecurityUtil.getCurrentMemberId())
+                    .limit(this.limit)
                     .build();
         }
     }
