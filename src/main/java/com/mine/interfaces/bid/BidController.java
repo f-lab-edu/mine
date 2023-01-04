@@ -1,7 +1,7 @@
 package com.mine.interfaces.bid;
 
 import com.mine.application.bid.BidFacade;
-import com.mine.domain.bid.AutoBidCommand;
+import com.mine.domain.bid.AutoBidRegisterCommand;
 import com.mine.domain.bid.BidCommand;
 import com.mine.domain.bid.BidInfo;
 import lombok.RequiredArgsConstructor;
@@ -24,9 +24,9 @@ public class BidController {
     }
 
     @PostMapping("/auto-bid")
-    public ResponseEntity<BidDto.BidResponse> autoBid(@PathVariable long auctionId, @RequestBody BidDto.AutoBidRequest request) {
-        AutoBidCommand command = request.toCommand(auctionId);
-        BidInfo bidInfo = bidFacade.autoBid(command);
+    public ResponseEntity<BidDto.BidResponse> registerNewAutoBid(@PathVariable long auctionId, @RequestBody BidDto.AutoBidRequest request) {
+        AutoBidRegisterCommand command = request.toCommand(auctionId);
+        BidInfo bidInfo = bidFacade.registerAutoBid(command);
         BidDto.BidResponse response = new BidDto.BidResponse(bidInfo);
         return ResponseEntity.ok(response);
     }

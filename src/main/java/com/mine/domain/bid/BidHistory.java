@@ -30,7 +30,7 @@ public class BidHistory {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private long biddingPrice;
+    private long biddingAmount;
 
     private ZonedDateTime biddingTime;
 }

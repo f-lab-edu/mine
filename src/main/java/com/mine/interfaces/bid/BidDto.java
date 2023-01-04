@@ -1,6 +1,6 @@
 package com.mine.interfaces.bid;
 
-import com.mine.domain.bid.AutoBidCommand;
+import com.mine.domain.bid.AutoBidRegisterCommand;
 import com.mine.domain.bid.BidCommand;
 import com.mine.domain.bid.BidInfo;
 import com.mine.util.SecurityUtil;
@@ -18,13 +18,13 @@ public class BidDto {
     @Setter
     public static class BidRequest {
 
-        private long price;
+        private long amount;
 
         public BidCommand toCommand(long auctionId) {
             return BidCommand.builder()
                     .auctionId(auctionId)
                     .userId(SecurityUtil.getCurrentMemberId())
-                    .price(this.price)
+                    .amount(this.amount)
                     .build();
         }
     }
@@ -34,8 +34,8 @@ public class BidDto {
 
         private long limit;
 
-        public AutoBidCommand toCommand(long auctionId) {
-            return AutoBidCommand.builder()
+        public AutoBidRegisterCommand toCommand(long auctionId) {
+            return AutoBidRegisterCommand.builder()
                     .auctionId(auctionId)
                     .userId(SecurityUtil.getCurrentMemberId())
                     .limit(this.limit)
@@ -49,14 +49,14 @@ public class BidDto {
         private final long bidHistoryId;
         private final long auctionId;
         private final long userId;
-        private final long biddingPrice;
+        private final long biddingAmount;
         private final String biddingTime;
 
         public BidResponse(BidInfo bidInfo) {
             this.bidHistoryId = bidInfo.getBidHistoryId();
             this.auctionId = bidInfo.getAuctionId();
             this.userId = bidInfo.getUserId();
-            this.biddingPrice = bidInfo.getBiddingPrice();
+            this.biddingAmount = bidInfo.getBiddingPrice();
             this.biddingTime = getLocalBiddingTime(bidInfo.getBiddingTime());
         }
 

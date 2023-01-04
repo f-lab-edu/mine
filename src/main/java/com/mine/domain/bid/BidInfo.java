@@ -17,7 +17,7 @@ public class BidInfo {
         this.bidHistoryId = bidHistory.getId();
         this.auctionId = bidHistory.getAuction().getId();
         this.userId = bidHistory.getUser().getId();
-        this.biddingPrice = bidHistory.getBiddingPrice();
+        this.biddingPrice = bidHistory.getBiddingAmount();
         this.biddingTime = bidHistory.getBiddingTime();
     }
 }
