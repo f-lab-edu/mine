@@ -9,7 +9,7 @@ import org.springframework.data.redis.core.TimeToLive;
 
 import java.util.concurrent.TimeUnit;
 
-@RedisHash("auto")
+@RedisHash("auto_bid")
 @Getter
 @Setter
 @Builder

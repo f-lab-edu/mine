@@ -28,8 +28,8 @@ public class HighestBid {
     private User user;
 
     @Setter
-    private long highestPrice;
+    private long highestBidAmount;
 
     @Setter
-    private long atLeast;
+    private long incrementalBidAmount;
 }

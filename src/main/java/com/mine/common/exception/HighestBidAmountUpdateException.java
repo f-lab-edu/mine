@@ -2,13 +2,13 @@ package com.mine.common.exception;
 
 import com.mine.common.response.ErrorCode;
 
-public class HighestBidPriceUpdateException extends BaseException {
+public class HighestBidAmountUpdateException extends BaseException {
 
-    public HighestBidPriceUpdateException() {
+    public HighestBidAmountUpdateException() {
         super(ErrorCode.COMMON_HIGHEST_BID_NOT_UPDATED);
     }
 
-    public HighestBidPriceUpdateException(String message) {
+    public HighestBidAmountUpdateException(String message) {
         super(message, ErrorCode.COMMON_HIGHEST_BID_NOT_UPDATED);
     }
 }

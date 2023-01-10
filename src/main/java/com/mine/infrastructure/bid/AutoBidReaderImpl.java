@@ -1,8 +1,6 @@
 package com.mine.infrastructure.bid;
 
-import com.mine.domain.bid.AutoBid;
-import com.mine.domain.bid.AutoBidCache;
-import com.mine.domain.bid.AutoBidReader;
+import com.mine.domain.bid.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -23,11 +21,13 @@ public class AutoBidReaderImpl implements AutoBidReader {
                     .auctionId(autoBid.getAuction().getId())
                     .userId(autoBid.getUser().getId())
                     .limit(autoBid.getLimit())
-                    .storageType(StorageType.Main)
+                    .storageType(StorageType.MAIN_DB)
                     .autoBidMain(autoBid)
                     .build();
         } else {
-            return null;
+            return AutoBidDto.builder()
+                    .storageType(StorageType.NOT_STORED)
+                    .build();
         }
     }
 
@@ -39,11 +39,13 @@ public class AutoBidReaderImpl implements AutoBidReader {
                     .auctionId(autoBidCache.get().getAuctionId())
                     .userId(autoBidCache.get().getUserId())
                     .limit(autoBidCache.get().getLimit())
-                    .storageType(StorageType.Cache)
+                    .storageType(StorageType.CACHE)
                     .autoBidCache(autoBidCache.get())
                     .build();
         } else {
-            return null;
+            return AutoBidDto.builder()
+                    .storageType(StorageType.NOT_STORED)
+                    .build();
         }
     }
 }
