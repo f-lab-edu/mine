@@ -1,6 +1,7 @@
 package com.mine.application.bid;
 
 import com.mine.domain.bid.*;
+import com.mine.infrastructure.bid.RedisPubsubPublisher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ public class BidFacade {
     private final HighestBidReader highestBidReader;
     private final HighestBidStore highestBidStore;
     private final AutoBidService autoBidService;
+    private final RedisPubsubPublisher redisPubsubPublisher;
 
     @Transactional
     public BidInfo manualBid(BidCommand command) {
@@ -25,6 +27,8 @@ public class BidFacade {
             autoBidService.autoBid(autoBid, highestBid);
         }
         highestBidStore.store(highestBid);
+
+        redisPubsubPublisher.convertAndSend(highestBid);
         return bidInfo;
     }
 

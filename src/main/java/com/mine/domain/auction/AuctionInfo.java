@@ -15,8 +15,8 @@ public class AuctionInfo {
     private final String title;
     private final long startingPrice;
     private final ZonedDateTime closingTime;
-    private final long highestPrice;
-    private final long atLeast;
+    private final long highestBidAmount;
+    private final long incrementalBidAmount;
     private final long userId;
 
     @Setter
@@ -27,8 +27,8 @@ public class AuctionInfo {
         this.title = auction.getTitle();
         this.startingPrice = auction.getStartingPrice();
         this.closingTime = auction.getClosingTime();
-        this.highestPrice = auction.getHighestBid().getHighestPrice();
-        this.atLeast = auction.getHighestBid().getAtLeast();
+        this.highestBidAmount = auction.getHighestBid().getHighestBidAmount();
+        this.incrementalBidAmount = auction.getHighestBid().getIncrementalBidAmount();
         this.userId = auction.getUser().getId();
     }
 }

@@ -36,7 +36,7 @@ public class AuctionCommand {
         return HighestBid.builder()
                 .auction(Auction.builder().id(auctionId).build())
                 .user(User.builder().id(this.userId).build())
-                .atLeast(this.startingPrice)
+                .incrementalBidAmount(this.startingPrice)
                 .build();
     }
 }
