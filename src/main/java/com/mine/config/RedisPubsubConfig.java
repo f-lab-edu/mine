@@ -1,6 +1,7 @@
 package com.mine.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mine.infrastructure.auction.RedisPubsubListener;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
