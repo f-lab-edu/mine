@@ -12,4 +12,4 @@
 ![Prototype](https://user-images.githubusercontent.com/76784643/192091701-58e36ee7-b121-49dd-9f85-34a5ee9fd796.png)
 
 ## System Design
-![Mine Cloud System Design](https://user-images.githubusercontent.com/76784643/219292196-67eaed93-61cc-4ebf-a4ae-4e6dd67e7006.png)
+![Mine Cloud System Design](https://user-images.githubusercontent.com/76784643/219538474-a06ce21c-1ab2-48ab-bb81-15831f11d474.png)
